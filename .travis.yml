@@ -1,0 +1,17 @@
+language: php
+
+php:
+    - 5.3
+    - 5.4
+env:
+    - WP_VERSION=3.4.1
+    - WP_VERSION=master
+
+before_script:
+    - wget https://raw.github.com/wp-cli/sample-plugin/master/bin/install-wp-tests.sh
+    - export WP_TESTS_DIR=wordpress
+    - bash install-wp-tests.sh wordpress root '' localhost $WP_VERSION
+    - cd wordpress
+
+script:
+    - phpunit -c ../tests/unit/ --exclude-group invalid
